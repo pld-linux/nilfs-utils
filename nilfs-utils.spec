@@ -81,7 +81,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog
-%{_sysconfdir}/nilfs_cleanerd.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/nilfs_cleanerd.conf
 %attr(755,root,root) /sbin/mkfs.nilfs2
 %attr(755,root,root) /sbin/mount.nilfs2
 %attr(755,root,root) /sbin/nilfs-tune
