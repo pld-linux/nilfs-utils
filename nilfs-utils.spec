@@ -1,12 +1,12 @@
 Summary:	Tools for the NILFS filesystem
 Summary(pl.UTF-8):	Narzędzia do systemu plików NILFS
 Name:		nilfs-utils
-Version:	2.0.20
+Version:	2.0.21
 Release:	1
 License:	GPL v2+
 Group:		Applications/System
 Source0:	http://www.nilfs.org/download/%{name}-%{version}.tar.bz2
-# Source0-md5:	04287d6c96df7d823a096c203021a2ec
+# Source0-md5:	7f970f35950b429ac490df594c9d8fc1
 URL:		http://www.nilfs.org/
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake
