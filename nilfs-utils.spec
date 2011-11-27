@@ -1,16 +1,17 @@
 Summary:	Tools for the NILFS filesystem
 Summary(pl.UTF-8):	Narzędzia do systemu plików NILFS
 Name:		nilfs-utils
-Version:	2.0.23
+Version:	2.1.0
 Release:	1
 License:	GPL v2+
 Group:		Applications/System
 Source0:	http://www.nilfs.org/download/%{name}-%{version}.tar.bz2
-# Source0-md5:	7f7e835d02e14642e8b7b32a36b7fab0
+# Source0-md5:	738f7bee062051c14dcff444bb17ada7
 URL:		http://www.nilfs.org/
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake
 BuildRequires:	libtool
+BuildRequires:	libmount-devel
 BuildRequires:	libuuid-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -35,6 +36,7 @@ Summary:	Header files for NILFS library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki NILFS
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	libuuid-devel
 
 %description devel
 Header files for NILFS library.
@@ -63,7 +65,8 @@ Statyczna biblioteka NILFS.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-%configure
+%configure \
+	--enable-libmount
 %{__make}
 
 %install
@@ -84,6 +87,8 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/nilfs_cleanerd.conf
 %attr(755,root,root) /sbin/mkfs.nilfs2
 %attr(755,root,root) /sbin/mount.nilfs2
+%attr(755,root,root) /sbin/nilfs-clean
+%attr(755,root,root) /sbin/nilfs-resize
 %attr(755,root,root) /sbin/nilfs-tune
 %attr(755,root,root) /sbin/nilfs_cleanerd
 %attr(755,root,root) /sbin/umount.nilfs2
@@ -95,6 +100,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/rmcp
 %attr(755,root,root) %{_libdir}/libnilfs.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libnilfs.so.0
+%attr(755,root,root) %{_libdir}/libnilfscleaner.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libnilfscleaner.so.0
+%attr(755,root,root) %{_libdir}/libnilfsgc.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libnilfsgc.so.0
 %{_mandir}/man1/lscp.1*
 %{_mandir}/man1/lssu.1*
 %{_mandir}/man5/nilfs_cleanerd.conf.5*
@@ -104,6 +113,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/mkfs.nilfs2.8*
 %{_mandir}/man8/mount.nilfs2.8*
 %{_mandir}/man8/nilfs.8*
+%{_mandir}/man8/nilfs-clean.8*
+%{_mandir}/man8/nilfs-resize.8*
 %{_mandir}/man8/nilfs-tune.8*
 %{_mandir}/man8/nilfs_cleanerd.8*
 %{_mandir}/man8/rmcp.8*
@@ -112,9 +123,15 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libnilfs.so
+%attr(755,root,root) %{_libdir}/libnilfscleaner.so
+%attr(755,root,root) %{_libdir}/libnilfsgc.so
 %{_libdir}/libnilfs.la
+%{_libdir}/libnilfscleaner.la
+%{_libdir}/libnilfsgc.la
 %{_includedir}/nilfs*.h
 
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libnilfs.a
+%{_libdir}/libnilfscleaner.a
+%{_libdir}/libnilfsgc.a
